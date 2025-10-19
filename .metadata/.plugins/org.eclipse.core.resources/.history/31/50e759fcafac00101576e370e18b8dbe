@@ -1,0 +1,12 @@
+package com.jpmc.midascore.repository;
+
+import com.jpmc.midascore.entity.UserRecord;
+
+import java.util.Optional;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRecordRepository extends JpaRepository<UserRecord, Long> {
+    Optional<UserRecord> findById(Long id);
+    Optional<UserRecord> findByName(String name);
+}

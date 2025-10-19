@@ -1,0 +1,7 @@
+general:
+  kafka-topic: test-transaction-topic
+
+spring:
+  kafka:
+    topic:
+      name: test-transaction-topic

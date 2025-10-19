@@ -1,0 +1,21 @@
+package com.jpmc.midascore.component;
+
+import com.jpmc.midascore.entity.UserRecord;
+import com.jpmc.midascore.repository.UserRepository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DatabaseConduit {
+    private final CrudRepository userRepository;
+
+    public DatabaseConduit(CrudRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public void save(UserRecord userRecord) {
+        userRepository.save(userRecord);
+    }
+
+}

@@ -1,0 +1,6 @@
+general:
+  kafka-topic: my-transaction-topic
+  spring:
+    kafka:
+      topic:
+        name: transaction-topic

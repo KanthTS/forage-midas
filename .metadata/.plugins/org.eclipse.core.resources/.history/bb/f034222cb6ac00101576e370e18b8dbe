@@ -1,0 +1,59 @@
+package com.jpmc.midascore.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+import com.jpmc.midascore.entity.TransactionRecord;
+import com.jpmc.midascore.entity.UserRecord;
+import com.jpmc.midascore.foundation.Transaction;
+import com.jpmc.midascore.repository.TransactionRecordRepository;
+import com.jpmc.midascore.repository.UserRecordRepository;
+
+@Service
+public class TransactionConsumerService {
+     @Autowired
+	private UserRecordRepository u;
+     @Autowired
+	private TransactionRecordRepository t;
+     @KafkaListener(topics = "my-transaction-topic", groupId = "midas-core-group")
+     public void listen(String transactionLine) {
+         Transaction tx=parse(transactionLine);
+         if(tx==null) {
+        	 return ;
+         }
+         UserRecord s=u.findById(tx.getSenderId()).orElse(null);
+         UserRecord r=u.findById(tx.getRecipientId()).orElse(null);
+         if(s==null || r==null) {
+        	 return ;
+         }
+         if(s.getBalance()<tx.getAmount()) {
+        	 return ;
+         }
+         s.setBalance(s.getBalance()-tx.getAmount());
+         r.setBalance(r.getBalance()+tx.getAmount());
+         u.save(s);
+         u.save(r);
+         TransactionRecord rec=new TransactionRecord();
+         rec.setAmount(tx.getAmount());
+         rec.setSender(s);
+         rec.setRecipient(r);
+         t.save(rec);
+     }
+	private Transaction parse(String line) {
+		try {
+            String[] parts = line.split(",");
+            if(parts.length != 3) return null;
+
+            long senderId = Long.parseLong(parts[0].trim());
+            long recipientId = Long.parseLong(parts[1].trim());
+            float amount = Float.parseFloat(parts[2].trim());
+
+            return new Transaction(senderId, recipientId, amount);
+        } catch (Exception e) {
+            // Log parse error if you want
+            return null;
+        }
+	}
+	
+}
