@@ -40,7 +40,16 @@ public class Transaction {
     public void setAmount(float amount) {
         this.amount = amount;
     }
+    private double incentive = 0.0;
 
+ // Getter and setter
+ public double getIncentive() {
+     return incentive;
+ }
+
+ public void setIncentive(double incentive) {
+     this.incentive = incentive;
+ }
     @Override
     public String toString() {
         return "Transaction {senderId=" + senderId + ", recipientId=" + recipientId + ", amount=" + amount + "}";

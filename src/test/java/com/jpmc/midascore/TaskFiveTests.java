@@ -13,6 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 public class TaskFiveTests {
+
     static final Logger logger = LoggerFactory.getLogger(TaskFiveTests.class);
 
     @Autowired
@@ -27,26 +28,35 @@ public class TaskFiveTests {
     @Autowired
     private BalanceQuerier balanceQuerier;
 
-
     @Test
     void task_five_verifier() throws InterruptedException {
+
+        // Step 1: Populate users
         userPopulator.populate();
+
+        // Step 2: Load transactions from file and send to Kafka
         String[] transactionLines = fileLoader.loadStrings("/test_data/rueiwoqp.tyruei");
         for (String transactionLine : transactionLines) {
             kafkaProducer.send(transactionLine);
         }
+
+        // Step 3: Wait for Kafka to process messages
         Thread.sleep(2000);
 
-        logger.info("----------------------------------------------------------");
-        logger.info("----------------------------------------------------------");
-        logger.info("----------------------------------------------------------");
-        logger.info("submit the following output to complete the task (include begin and end output denotations)");
-        StringBuilder output = new StringBuilder("\n").append("---begin output ---").append("\n");
+        // Step 4: Query balances from database
+        StringBuilder output = new StringBuilder();
+        output.append("---begin output ---").append("\n");
+
         for (int i = 0; i < 13; i++) {
             Balance balance = balanceQuerier.query((long) i);
             output.append(balance.toString()).append("\n");
         }
+
         output.append("---end output ---");
-        logger.info(output.toString());
+
+        // Step 5: Store output in variable test5 and print to console
+        String test5 = output.toString();
+        System.out.println(test5); // console output
+        logger.info(test5);        // also logs via logger
     }
 }
