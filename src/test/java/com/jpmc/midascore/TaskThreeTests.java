@@ -8,6 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 
+import com.jpmc.midascore.entity.UserRecord;
+import com.jpmc.midascore.repository.UserRecordRepository;
+
+import java.util.List;
+
 @SpringBootTest
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
@@ -23,6 +28,9 @@ public class TaskThreeTests {
     @Autowired
     private FileLoader fileLoader;
 
+    @Autowired
+    private UserRecordRepository userRepo;
+
     @Test
     void task_three_verifier() throws InterruptedException {
         userPopulator.populate();
@@ -32,11 +40,18 @@ public class TaskThreeTests {
         }
         Thread.sleep(2000);
 
-
         logger.info("----------------------------------------------------------");
         logger.info("----------------------------------------------------------");
         logger.info("----------------------------------------------------------");
         logger.info("use your debugger to find out what waldorf's balance is after all transactions are processed");
+
+        
+        List<UserRecord> waldorfs = userRepo.findByName("waldorf");
+        waldorfs.forEach(u -> {
+            System.out.println("waldorf balance (raw): " + u.getBalance());
+            System.out.println("waldorf balance (floor int): " + (int) Math.floor(u.getBalance()));
+        });
+
         logger.info("kill this test once you find the answer");
         while (true) {
             Thread.sleep(20000);
