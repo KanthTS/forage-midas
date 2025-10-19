@@ -49,12 +49,18 @@ Your final task is to expose a REST API for querying user balances. The API cont
 
 OUTPUT:
 
-BEGIN OUTPUT
-[INFO] Running com.jpmc.midascore.TaskFiveTests
+BEGIN OUTPUT.
+
+[INFO] Running com.jpmc.midascore.TaskFiveTests.
+
 [INFO] 
-[INFO] GET /balance?userId=waldorf -> Balance{userId='waldorf', balance=608}
-[INFO] GET /balance?userId=wilbur -> Balance{userId='wilbur', balance=4384}
-[INFO] GET /balance?userId=unknownUser -> Balance{userId='unknownUser', balance=0}
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.342 s - in com.jpmc.midascore.TaskFiveTests
+[INFO] GET /balance?userId=waldorf -> Balance{userId='waldorf', balance=608},
+
+[INFO] GET /balance?userId=wilbur -> Balance{userId='wilbur', balance=4384},
+
+[INFO] GET /balance?userId=unknownUser -> Balance{userId='unknownUser', balance=0},
+
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.342 s - in com.jpmc.midascore.TaskFiveTests.
+
 END OUTPUT
 
