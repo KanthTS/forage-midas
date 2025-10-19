@@ -1,5 +1,7 @@
 # Midas
-Project repo for the JPMC Advanced Software Engineering Forage program
+Project repo for the JPMC Advanced Software Engineering Forage program.
+
+
 TASK-1:
 Fork and clone the project repo, which already contains the scaffold your teammate has created. The repo can be found here: https://github.com/vagabond-systems/forage-midas
 Open the program in your IDE of choice - you will have a much easier time if your IDE has support for Spring or at least Maven projects. If you are casting about for a new IDE to call home, consider IntelliJ by Jetbrains. It is a feature-rich, well-supported IDE with plenty of useful bits and pieces which make development faster and more enjoyable. The community edition is entirely free, and you can get a free student license for IntelliJ Ultimate if you are part of an accredited educational program.
