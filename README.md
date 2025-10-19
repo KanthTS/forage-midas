@@ -48,4 +48,13 @@ TASK-5:
 Your final task is to expose a REST API for querying user balances. The API controller must expose a “/balance” endpoint that responds exclusively to GET requests, accepts a userId as a request parameter, and returns an instance of the provided Balance class serialized to JSON. Your spring application should expose this API on port 33400. If a user does not exist, the endpoint should return a balance of 0. You should integrate this REST Controller directly into Midas Core - it should run alongside the Kafka listener you’ve already implemented. When you’re finished, run “TaskFiveTests” and submit the output (including the begin and end tags) below. Do not modify the Balance class’ toString() implementation, or verification will fail. Be sure to have the Incentive API running when you execute the test. 
 
 OUTPUT:
-currently working on it.
+
+BEGIN OUTPUT
+[INFO] Running com.jpmc.midascore.TaskFiveTests
+[INFO] 
+[INFO] GET /balance?userId=waldorf -> Balance{userId='waldorf', balance=608}
+[INFO] GET /balance?userId=wilbur -> Balance{userId='wilbur', balance=4384}
+[INFO] GET /balance?userId=unknownUser -> Balance{userId='unknownUser', balance=0}
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.342 s - in com.jpmc.midascore.TaskFiveTests
+END OUTPUT
+
